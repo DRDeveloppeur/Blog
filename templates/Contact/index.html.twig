@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h1>Page de contact</h1>
+            </div>
+        </div>
+
+        <div class="col-10-center mt-auto">
+            {% if message %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Votre message a bien été envoyé !
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                 <!-- Central Modal Medium Success -->
+                <div class="modal fade right" 
+                    id="centralModalSuccess" 
+                    tabindex="-1" 
+                    role="dialog" 
+                    aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-side modal-full-height modal-right" 
+                        role="document">
+                        <!--Content-->
+                        <div class="modal-content">
+                        <!--Header-->
+                        <div class="modal-header">
+                            <p class="heading lead text-center">Dernier message !</p>
+
+                            <button type="button" 
+                                    class="close" 
+                                    data-dismiss="modal" 
+                                    aria-label="Close">
+                            <span aria-hidden="true" class="white-text">&times;</span>
+                            </button>
+                        </div>
+
+                        <!--Body-->
+                        <div class="modal-body">
+                            <div class="text-center">
+                            <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+                            <p>{{ message }}</p>
+                            </div>
+                        </div>
+
+                        <!--Footer-->
+                        <div class="modal-footer justify-content-center">
+                            <a type="button" class="btn btn-outline-success waves-effect" data-dismiss="modal">OK</a>
+                        </div>
+                        </div>
+                        <!--/.Content-->
+                    </div>
+                </div>
+                <!-- Central Modal Medium Success-->
+            {% endif %}
+        </div>
+
+        <div class="col align-content-center">
+            <form action="/contact" method="post">
+                    <!--Grid row-->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="md-form">
+                                <input type="text" 
+                                    id="message" 
+                                    name="name" 
+                                    rows="2" 
+                                    class="form-control md-textarea">
+                                <label for="name">Your message</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Grid row-->
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
