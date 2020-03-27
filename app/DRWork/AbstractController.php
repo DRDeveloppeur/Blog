@@ -14,7 +14,7 @@ class AbstractController
         $this->twig = new \Twig\Environment($this->loader);
     }
 
-    public function render($view, $contents = [])
+    protected function render($view, $contents = [])
     {
         echo $this->twig->render($view, $contents);
     }

@@ -8,39 +8,43 @@ use DRWork\AbstractController;
 
 class BlogController extends AbstractController
 {
+    private $repo;
     private $entity;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->repo = new BlogRepository("article");
+        $this->entity = new Blog();
+    }
     
     public function index()
     {
-        $this->entity = new BlogRepository("comment");
-        $comments = $this->entity->findAll();
+        $articles = $this->repo->findAll();
 
         return $this->render('Blog/index.html.twig', 
-        ["uri" => $_SERVER["REQUEST_URI"], "comments" => $comments]);
+        ["uri" => $_SERVER["REQUEST_URI"], "articles" => $articles]);
     }
 
     public function create()
     {
-        $this->entity = new BlogRepository("comment");
-        $this->entity->new($_REQUEST);
+        $this->repo->new($_REQUEST);
 
         header('Location: /blog');
     }
 
     public function delete()
     {
-        $this->entity = new BlogRepository("comment");
         $id = end(explode("/", $_SERVER["REQUEST_URI"]));
-        $this->entity->del($id);
+        $this->repo->del($id);
 
         header('Location: /blog');
     }
 
     public function update()
     {
-        $this->entity = new BlogRepository("comment");
         $id = end(explode("/", $_SERVER["REQUEST_URI"]));
-        $this->entity->up($id, $_REQUEST);
+        $this->repo->up($id, $_REQUEST);
 
         header('Location: /blog');
     }

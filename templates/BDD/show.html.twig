@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Test{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Table {{ table_name }}</h1>
+
+        <div class="col">
+            <div class="wrapper-editor">
+              
+                <div class="row d-flex justify-content-center modalWrapper">
+                    <div class="modal fade addNewInputs" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="modalAdd"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header text-center">
+                                    <h4 class="modal-title w-100 font-weight-bold text-primary ml-5">Ajouter un nouveau champ</h4>
+                                    <button type="button" class="close text-primary" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form method="post">
+                                    <div class="modal-body mx-3">
+                                        <div class="md-form mb-5">
+                                            <input type="text" 
+                                                id="field" 
+                                                name="Field" 
+                                                class="form-control validate" required>
+                                            <label data-error="wrong" data-success="right" for="field">Nom du champ</label>
+                                        </div>
+                                        <div class="md-form mb-5">
+                                            <select name="Type" required class="browser-default custom-select">
+                                                <option selected disabled>Le type</option>
+                                                <option value="INT">Integer</option>
+                                                <option value="VARCHAR(255)">String</option>
+                                                <option value="TEXT">Text</option>
+                                                <option value="datetime">Date</option>
+                                                <option value="datetime default CURRENT_TIMESTAMP">Date de creation</option>
+                                            </select>
+                                        </div>
+                                        <div class="md-form mb-5">
+                                            <select name="Null" class="browser-default custom-select">
+                                                <option selected disabled>Nullable</option>
+                                                <option value="NULL">Oui</option>
+                                                <option value="NOT NULL">Non</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-center buttonAddFormWrapper">
+                                        <button type="submit" 
+                                            class="btn btn-outline-primary btn-block buttonAdd">Add
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="" class="btn btn-info btn-rounded btn-sm" data-toggle="modal" data-target="#modalAdd">Add<i
+                            class="fas fa-plus-square ml-1"></i></a>
+                    </div>
+                </div>
+              
+                <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                        <th class="th-sm">Field</th>
+                        <th class="th-sm">Type</th>
+                        <th class="th-sm">Null</th>
+                        <th class="th-sm">Key</th>
+                        <th class="th-sm">Default</th>
+                        <th class="th-sm">Extra</th>
+                        <th class="th-sm">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for column in columns %}
+                        <tr role="row" class="odd">
+                            <td>{{ column["Field"] }}</td>
+                            <td>{{ column["Type"] }}</td>
+                            <td>{{ column["Null"] }}</td>
+                            <td>{{ column["Key"] }}</td>
+                            <td>{{ column["Default"] }}</td>
+                            <td>{{ column["Extra"] }}</td>
+                            <td>
+                                <div class="row justify-content-center">
+                                    <div class="text-center">
+                                        <button class="btn btn-danger btn-sm btn-rounded buttonDelete" data-toggle="modal" data-target="#modalDelete{{column["Field"]}}">Delete<i class="fas fa-times ml-1"></i></a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <div class="row d-flex justify-content-center modalWrapper">
+                            <div class="modal fade" id="modalDelete{{column["Field"]}}" tabindex="-1" role="dialog" aria-labelledby="modalDelete"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header text-center">
+                                            <h4 class="modal-title w-100 font-weight-bold ml-5 text-danger">Delete</h4>
+                                            <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body mx-3">
+                                            <p class="text-center h4">Êtes-vous sûr de vouloir supprimer le champ {{column["Field"]}} ?</p>
+                                
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center deleteButtonsWrapper">
+                                            <a href="/DB/delete/{{table_name}}-{{column["Field"]}}" class="btn btn-danger btnYesClass">Yes</a>
+                                            <button type="button" class="btn btn-primary btnNoClass" id="btnNo" data-dismiss="modal">No</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="js/table.js"></script>
+{% endblock %}

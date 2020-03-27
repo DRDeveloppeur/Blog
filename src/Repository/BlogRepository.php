@@ -1,6 +1,7 @@
 <?php
 namespace App\Repository;
 
+use DRWork\Core\Database\DatabaseMysql;
 use DRWork\Core\ORM;
 
 class BlogRepository extends ORM
@@ -9,6 +10,7 @@ class BlogRepository extends ORM
 
     public function __construct($table)
     {
+        parent::__construct();
         $this->table = $table;
     }
 

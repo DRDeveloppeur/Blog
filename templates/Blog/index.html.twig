@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Test{% endblock %}
+{% block title %}Blog Gestion{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1 class="text-center">Creation d'articles test</h1>
+        <h1 class="text-center">Gestion du Blog</h1>
 
         <div class="col">
             <div class="wrapper-editor">
@@ -24,17 +24,17 @@
                                     <div class="modal-body mx-3">
                                         <div class="md-form mb-5">
                                             <input type="text" 
-                                                id="name" 
-                                                name="name" 
+                                                id="title" 
+                                                name="title" 
                                                 class="form-control validate" required>
-                                            <label data-error="wrong" data-success="right" for="name">Votre nom</label>
+                                            <label data-error="wrong" data-success="right" for="title">Titre</label>
                                         </div>
                                         <div class="md-form mb-5">
-                                            <input type="text" 
-                                                id="comment" 
-                                                name="comment" 
-                                                class="form-control validate" required>
-                                            <label data-error="wrong" data-success="right" for="comment">Commentaire</label>
+                                            <textarea type="text" 
+                                                id="content" 
+                                                name="content" 
+                                                class="form-control md-textarea validate" required></textarea>
+                                            <label data-error="wrong" data-success="right" for="content">Commentaire</label>
                                         </div>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-center buttonAddFormWrapper">
@@ -55,56 +55,57 @@
                 <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
                   <thead>
                     <tr>
-                        <th class="th-sm">Id</th>
-                        <th class="th-sm">Name</th>
-                        <th class="th-sm">Comment</th>
+                        <th class="th-sm">Titre</th>
+                        <th class="th-sm">Commentaire</th>
+                        <th class="th-sm">Date</th>
                         <th class="th-sm">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for comment in comments %}
+                    {% for article in articles %}
                         <tr role="row" class="odd">
-                          <td>{{ comment.id }}</td>
-                          <td>{{ comment.name }}</td>
-                          <td>{{ comment.comment }}</td>
+                          <td>{{ article.title }}</td>
+                          <td>{{ article.content }}</td>
+                          <td>{{ article.createdAt|date("d/m/Y à g:i", "Europe/Paris") }}</td>
                           <td>
                               <div class="row justify-content-center">
                                   <div class="text-center buttonEditWrapper">
-                                      <button class="btn btn-info btn-rounded btn-sm buttonEdit" data-toggle="modal" data-target="#modalEdit{{comment.id}}">Edit<i class="fas fa-pencil-square-o ml-1"></i></a>
+                                      <button class="btn btn-info btn-rounded btn-sm buttonEdit" data-toggle="modal" data-target="#modalEdit{{article.id}}">Edit<i class="fas fa-pencil-square-o ml-1"></i></a>
                                   </div>
                                   <div class="text-center">
-                                      <button class="btn btn-danger btn-sm btn-rounded buttonDelete" data-toggle="modal" data-target="#modalDelete{{comment.id}}">Delete<i class="fas fa-times ml-1"></i></a>
+                                      <button class="btn btn-danger btn-sm btn-rounded buttonDelete" data-toggle="modal" data-target="#modalDelete{{article.id}}">Delete<i class="fas fa-times ml-1"></i></a>
                                   </div>
                               </div>
                           </td>
                         </tr>
                         <div class="row d-flex justify-content-center modalWrapper">
-                            <div class="modal fade modalEditClass" id="modalEdit{{comment.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal fade modalEditClass" id="modalEdit{{article.id}}" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header text-center">
-                                            <h4 class="modal-title w-100 font-weight-bold text-secondary ml-5">Modifier le commentaire de {{ comment.name }}</h4>
+                                            <h4 class="modal-title w-100 font-weight-bold text-secondary ml-5">Modifier le commentaire de {{ article.name }}</h4>
                                             <button type="button" class="close text-secondary" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <form action="/blog/edit/{{ comment.id }}" method="post">
+                                        <form action="/blog/edit/{{ article.id }}" method="post">
                                             <div class="modal-body mx-3">
-                                                <div class="md-form mb-5">
-                                                    <input type="text" 
-                                                        id="name" 
-                                                        name="name"
-                                                        value="{{ comment.name }}" 
-                                                        class="form-control validate" required>
-                                                    <label data-error="wrong" data-success="right" for="name">Votre nom</label>
-                                                </div>
-                                                <div class="md-form mb-5">
-                                                    <input type="text" 
-                                                        id="comment" 
-                                                        name="comment" 
-                                                        value="{{ comment.comment }}" 
-                                                        class="form-control validate" required>
-                                                    <label data-error="wrong" data-success="right" for="comment">Commentaire</label>
+                                                <div class="modal-body mx-3">
+                                                    <div class="md-form mb-5">
+                                                        <input type="text" 
+                                                            id="title" 
+                                                            name="title" 
+                                                            value="{{ article.title }}" 
+                                                            class="form-control validate" required>
+                                                        <label data-error="wrong" data-success="right" for="title">Titre</label>
+                                                    </div>
+                                                    <div class="md-form mb-5">
+                                                        <textarea type="text" 
+                                                            id="content" 
+                                                            name="content" 
+                                                            class="form-control md-textarea validate" required>{{ article.content }}</textarea>
+                                                        <label data-error="wrong" data-success="right" for="content">Commentaire</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="modal-footer d-flex justify-content-center buttonAddFormWrapper">
@@ -117,7 +118,7 @@
                                 </div>
                             </div>
                             
-                            <div class="modal fade" id="modalDelete{{comment.id}}" tabindex="-1" role="dialog" aria-labelledby="modalDelete"
+                            <div class="modal fade" id="modalDelete{{article.id}}" tabindex="-1" role="dialog" aria-labelledby="modalDelete"
                                 aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -132,7 +133,7 @@
                                 
                                         </div>
                                         <div class="modal-footer d-flex justify-content-center deleteButtonsWrapper">
-                                            <a href="/blog/delete/{{ comment.id }}" class="btn btn-danger btnYesClass">Yes</a>
+                                            <a href="/blog/delete/{{ article.id }}" class="btn btn-danger btnYesClass">Yes</a>
                                             <button type="button" class="btn btn-primary btnNoClass" id="btnNo" data-dismiss="modal">No</button>
                                         </div>
                                     </div>
