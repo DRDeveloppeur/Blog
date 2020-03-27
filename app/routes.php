@@ -2,6 +2,7 @@
 
 $r->addRoute('GET', '/', ["\App\Controller\HomeController", "index"]);
 $r->addRoute('GET', '/home', "\App\Controller\HomeController::index");
+$r->addRoute('POST', '/', "\App\Controller\HomeController::create");
 
 $r->addRoute('GET', '/DB', "\App\Controller\DbController::index");
 $r->addRoute('POST', '/DB', "\App\Controller\DbController::newTable");

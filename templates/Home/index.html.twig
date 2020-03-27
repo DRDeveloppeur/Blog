@@ -4,10 +4,71 @@
 
 {% block body %}
     <div class="container">
-        <div class="row">
-            <div class="col text-center">
-                <h1>Accueil</h1>
+        <h1 class="text-center m-5">Bienvenue sur mon blog</h1>
+
+        {% if flash %}
+            <div class="alert {% if flash.type == 'success' %} alert-success {% elseif flash.type == 'error' %} alert-danger {% endif %} alert-dismissible fade show" role="alert">
+                {{ flash.message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+        {% endif %}
+
+        <div class="modal fade bottom" 
+                    id="centralModalSuccess" 
+                    tabindex="-1" 
+                    role="dialog" 
+                    aria-labelledby="myModalLabel"
+                    aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-side modal-full-height modal-bottom" 
+                role="document">
+                <div class="modal-content">
+                    <form action="/" method="post">
+                        <div class="modal-header">
+                            <p class="heading lead">Ecrire un message</p>
+                            <button type="button" 
+                                    class="close" 
+                                    data-dismiss="modal" 
+                                    aria-label="Close">
+                                <span aria-hidden="true" class="white-text">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-body mx-3">
+                                <div class="modal-body mx-3">
+                                    <div class="md-form mb-5">
+                                        <input type="text" 
+                                            id="title" 
+                                            name="title" 
+                                            class="form-control validate" required>
+                                        <label data-error="wrong" data-success="right" for="title">Titre</label>
+                                    </div>
+                                    <div class="md-form mb-5">
+                                        <textarea type="text" 
+                                            id="content" 
+                                            name="content" 
+                                            class="form-control md-textarea validate" required></textarea>
+                                        <label data-error="wrong" data-success="right" for="content">Commentaire</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="submit" class="btn btn-outline-success waves-effect">Poster</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        {% for article in articles %}
+            <div class="col mb-5 {% if flash.type == 'success' %} animated flash {% else %} animated bounceInRight {% endif %}" style="border-left:4px solid red;">
+                <h4 class="ml-5">{{ article.title }}</h4>
+                <p class="card-text">{{ article.content }}</p>
+                <i class="far fa-clock pr-1 ml-2"></i>{{ article.createdAt|date("d/m/Y à G:i") }}                
+            </div>
+        {% endfor %}
         </div>
     </div>
 {% endblock %}

@@ -13,12 +13,14 @@ class Blog
     /**
      * @var string
      */
-    private $name;
+    private $title;
    
     /**
      * @var string
      */
-    private $comment;
+    private $content;
+   
+    private $createdAt;
 
     /**
      * Get the value of id
@@ -30,51 +32,60 @@ class Blog
         return $this->id;
     }
 
+
     /**
-     * Get the value of name
+     * Get the value of title
      *
      * @return  string
      */ 
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
-     * Set the value of name
+     * Set the value of title
      *
-     * @param  string  $name
+     * @param  string  $title
      *
      * @return  self
      */ 
-    public function setName(string $name)
+    public function setTitle(string $title)
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get the value of comment
+     * Get the value of content
      *
      * @return  string
      */ 
-    public function getComment()
+    public function getContent()
     {
-        return $this->comment;
+        return $this->content;
     }
 
     /**
-     * Set the value of comment
+     * Set the value of content
      *
-     * @param  string  $comment
+     * @param  string  $content
      *
      * @return  self
      */ 
-    public function setComment(string $comment)
+    public function setContent(string $content)
     {
-        $this->comment = $comment;
+        $this->content = $content;
 
         return $this;
+    }
+
+    /**
+     * Get the value of created_at
+     */ 
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

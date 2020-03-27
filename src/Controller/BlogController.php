@@ -2,20 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Blog;
 use App\Repository\BlogRepository;
 use DRWork\AbstractController;
 
 class BlogController extends AbstractController
 {
     private $repo;
-    private $entity;
 
     public function __construct()
     {
         parent::__construct();
         $this->repo = new BlogRepository("article");
-        $this->entity = new Blog();
     }
     
     public function index()

@@ -1,7 +1,6 @@
 <?php
 namespace App\Repository;
 
-use DRWork\Core\Database\DatabaseMysql;
 use DRWork\Core\ORM;
 
 class BlogRepository extends ORM
