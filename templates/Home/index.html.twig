@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="text-center m-5">Bienvenue sur mon blog</h1>
+        <h1 class="text-center m-5 animated flash">Bienvenue sur mon blog</h1>
 
         {% if flash %}
             <div class="alert {% if flash.type == 'success' %} alert-success {% elseif flash.type == 'error' %} alert-danger {% endif %} alert-dismissible fade show" role="alert">
